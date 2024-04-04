@@ -21,7 +21,7 @@ public class Hero extends Character {
     }
 
     public double getHeroDamage(int indexSkill){
-        return listSkill.get(indexSkill).getSkillDamage() * super.damage * Math.random();
+        return (listSkill.get(indexSkill).getSkillDamage() + super.damage) * Math.random();
     }
 
     public double getHeroArmor(){
