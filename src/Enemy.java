@@ -4,7 +4,7 @@ public class Enemy extends Character {
     ArrayList<Skill> listSkill;
     int level;
 
-    Enemy(String name, double damage, double armor, int level){
+    Enemy(String name, int damage, int armor, int level){
         super.name = name;
         super.armor = armor;
         super.damage = damage;
@@ -17,24 +17,24 @@ public class Enemy extends Character {
         listSkill.add(skill2);
     }
 
-    public void addSkill(String skillName, double skillDamage){
+    public void addSkill(String skillName, int skillDamage){
         Skill skill = new Skill(skillName, skillDamage);
         listSkill.add(skill);
     }
 
-    public double getEnemyDamage(int indexSkill){
-        return (listSkill.get(indexSkill).getSkillDamage() + super.damage) * Math.random();
+    public int getEnemyDamage(Skill skill){
+        return (int)((skill.getSkillDamage() + super.damage) * Math.random());
     }
 
-    public double getEnemyArmor(){
-        return super.armor * Math.random();
+    public int getEnemyArmor(){
+        return (int)(super.armor * Math.random());
     }
 
-    public double getHealth(){
+    public int getHealth(){
         return super.health;
     }
 
-    public void setHealth(double newHealth){
+    public void setHealth(int newHealth){
         super.health = newHealth;
     }
 }

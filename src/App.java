@@ -52,7 +52,7 @@ public class App {
             if (isWin && i == listEnemies.size() - 1)
                 System.out.println("Selamat Anda Menang!!!");
             else if (isWin) {
-                System.out.println("================================");
+                System.out.println("===========================");
                 continue;
             } else {
                 System.out.println("Game Over");
@@ -67,7 +67,7 @@ public class App {
         ArrayList<Hero> list = new ArrayList<Hero>();
         Hero hero1 = new Hero("Hero 1", 10, 5);
         Hero hero2 = new Hero("Hero 2", 7, 7);
-        Hero hero3 = new Hero("Hero 3", 5, 10);
+        Hero hero3 = new Hero("Hero 3", 20, 20);
         list.add(hero1);
         list.add(hero2);
         list.add(hero3);
@@ -78,7 +78,7 @@ public class App {
         ArrayList<Enemy> list = new ArrayList<Enemy>();
         Enemy enemy1 = new Enemy("Enemy 1", 5, 5, 1);
         Enemy enemy2 = new Enemy("Enemy 2", 7, 7, 2);
-        Enemy enemy3 = new Enemy("Enemy 3", 10, 10, 3);
+        Enemy enemy3 = new Enemy("Enemy 3", 5, 5, 3);
         list.add(enemy1);
         list.add(enemy2);
         list.add(enemy3);
@@ -89,34 +89,34 @@ public class App {
         while (hero.getHealth() > 0 && enemy.getHealth() > 0) {
             System.out.println("===========================");
             System.out.println("Giliran Anda");
-            for (int i = 0; i < hero.listSkill.size(); i++) {
-                System.out.println(i + 1 + ". " + hero.listSkill.get(i).getSkillName());
-            }
+            for (int i = 0; i < hero.listSkill.size(); i++) 
+                System.out.println(i + 1 + ". " + hero.listSkill.get(i).getSkillName() + " +" + hero.listSkill.get(i).getSkillDamage());
             System.out.print("Pilih Skill: ");
             Skill selectedSkill = hero.listSkill.get(scanner.nextInt() - 1);
-            double skillDamage = (selectedSkill.getSkillDamage() - enemy.getEnemyArmor());
+            double skillDamage = (hero.getHeroDamage(selectedSkill) - enemy.getEnemyArmor());
             if (skillDamage < 0) skillDamage = 0;
             double enemyHealth = enemy.getHealth() - skillDamage;
-            enemy.setHealth(enemyHealth);
-            System.out.println(hero.name + " menggunakan skill " + selectedSkill.getSkillName());
-            System.out.println("Nyawa " + enemy.name + " berkurang sebanyak: " + skillDamage + "%");
+            enemy.setHealth((int)enemyHealth);
+            System.out.println("Anda menggunakan skill " + selectedSkill.getSkillName());
+            System.out.println("Nyawa " + enemy.name + " berkurang sebanyak: " + (int)skillDamage);
             System.out.println("Nyawa " + enemy.name + " saat ini: " + (enemy.getHealth() < 0 ? 0 : enemy.getHealth()));
 
-            System.out.println("===========================");
             if (enemy.getHealth() > 0) {
+                System.out.println("===========================");
                 Random random = new Random();
                 int randomNumber = random.nextInt(enemy.listSkill.size());
                 Skill enemySkill = enemy.listSkill.get(randomNumber);
-                double enemySkillDamage = (enemySkill.getSkillDamage() - hero.getHeroArmor());
+                double enemySkillDamage = (enemy.getEnemyDamage(enemySkill) - hero.getHeroArmor());
                 if (enemySkillDamage < 0) enemySkillDamage = 0;
                 double heroHealth = hero.getHealth() - enemySkillDamage;
-                hero.setHealth(heroHealth);
+                hero.setHealth((int)heroHealth);
                 System.out.println(enemy.name + " menggunakan skill " + enemySkill.getSkillName());
-                System.out.println("Nyawa " + hero.name + " berkurang sebanyak: " + enemySkillDamage + "%");
-                System.out.println("Nyawa " + hero.name + " saat ini: " + (hero.getHealth() < 0 ? 0 : hero.getHealth()));
+                System.out.println("Nyawa Anda berkurang sebanyak: " + (int)enemySkillDamage);
+                System.out.println("Nyawa Anda saat ini: " + (hero.getHealth() < 0 ? 0 : hero.getHealth()));
             }
         }
 
+        System.out.println("===========================");
         boolean isWin = hero.getHealth() > 0;
         if (isWin)
             System.out.println("Anda Menang");
