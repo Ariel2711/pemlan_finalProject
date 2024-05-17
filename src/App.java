@@ -41,7 +41,7 @@ public class App {
         System.out.println("================================");
 
         for (int i = 0; i < listEnemies.size(); i++) {
-            System.out.println("Musuh Anda : " + listEnemies.get(i).name + " level " + listEnemies.get(i).level);
+            System.out.println("Musuh Anda : " + listEnemies.get(i).name);
             System.out.print("Mulai Pertarungan (y/n) : ");
             String mulai = scanner.next();
 
@@ -65,9 +65,27 @@ public class App {
 
     public static ArrayList<Hero> initAllHero() {
         ArrayList<Hero> list = new ArrayList<Hero>();
-        Hero hero1 = new Hero("Hero 1", 10, 5);
-        Hero hero2 = new Hero("Hero 2", 7, 7);
-        Hero hero3 = new Hero("Hero 3", 20, 20);
+        Hero hero1 = new Hero("Kirana Wibawa", 10, 5);
+        Skill skill1 = new Skill("Serangan Cahaya Batin", 10);
+        Skill skill2 = new Skill("Tarian Pedang Angkasa", 20);
+        Skill skill3 = new Skill("Gelombang Cahaya Abadi", 30);
+        hero1.addSkill(skill1);
+        hero1.addSkill(skill2);
+        hero1.addSkill(skill3);
+        Hero hero2 = new Hero("Raka Serdadu", 8, 7);
+        Skill skill4 = new Skill("Tebasan Kilat", 10);
+        Skill skill5 = new Skill("Bom Tangan Tempur", 20);
+        Skill skill6 = new Skill("Pukulan Palu", 30);
+        hero2.addSkill(skill4);
+        hero2.addSkill(skill5);
+        hero2.addSkill(skill6);
+        Hero hero3 = new Hero("Satria Bayu", 9, 10);
+        Skill skill7 = new Skill("Tarian Angin Puing", 10);
+        Skill skill8 = new Skill("Hembusan Cepat", 20);
+        Skill skill9 = new Skill("Pedang Badai", 30);
+        hero3.addSkill(skill7);
+        hero3.addSkill(skill8);
+        hero3.addSkill(skill9);
         list.add(hero1);
         list.add(hero2);
         list.add(hero3);
@@ -76,9 +94,27 @@ public class App {
 
     public static ArrayList<Enemy> initAllEnemies() {
         ArrayList<Enemy> list = new ArrayList<Enemy>();
-        Enemy enemy1 = new Enemy("Enemy 1", 5, 5, 1);
-        Enemy enemy2 = new Enemy("Enemy 2", 7, 7, 2);
-        Enemy enemy3 = new Enemy("Enemy 3", 5, 5, 3);
+        Enemy enemy1 = new Enemy("Bara Pralaya", 5, 7);
+        Skill skill1 = new Skill("Bayangan Gelap", 10);
+        Skill skill2 = new Skill("Kutukan Kelam", 20);
+        Skill skill3 = new Skill("Tombak Lava", 30);
+        enemy1.addSkill(skill1);
+        enemy1.addSkill(skill2);
+        enemy1.addSkill(skill3);
+        Enemy enemy2 = new Enemy("Durjana Karna", 7, 9);
+        Skill skill4 = new Skill("Bola Api Neraka", 10);
+        Skill skill5 = new Skill("Meteor Neraka", 20);
+        Skill skill6 = new Skill("Api Manipulasi", 30);
+        enemy2.addSkill(skill4);
+        enemy2.addSkill(skill5);
+        enemy2.addSkill(skill6);
+        Enemy enemy3 = new Enemy("Ratu Sengketa", 8, 11);
+        Skill skill7 = new Skill("Pesona Kejahatan", 10);
+        Skill skill8 = new Skill("Ledakan Emosi", 20);
+        Skill skill9 = new Skill("Bayangan Kegelapan", 30);
+        enemy3.addSkill(skill7);
+        enemy3.addSkill(skill8);
+        enemy3.addSkill(skill9);
         list.add(enemy1);
         list.add(enemy2);
         list.add(enemy3);
@@ -91,13 +127,13 @@ public class App {
             System.out.println("Giliran Anda");
             for (int i = 0; i < hero.listSkill.size(); i++) 
                 System.out.println(i + 1 + ". " + hero.listSkill.get(i).getSkillName() + " +" + hero.listSkill.get(i).getSkillDamage());
-            System.out.print("Pilih Skill: ");
+            System.out.print("Pilih Jurus: ");
             Skill selectedSkill = hero.listSkill.get(scanner.nextInt() - 1);
             double skillDamage = (hero.getHeroDamage(selectedSkill) - enemy.getEnemyArmor());
             if (skillDamage < 0) skillDamage = 0;
             double enemyHealth = enemy.getHealth() - skillDamage;
             enemy.setHealth((int)enemyHealth);
-            System.out.println("Anda menggunakan skill " + selectedSkill.getSkillName());
+            System.out.println("Anda menggunakan jurs " + selectedSkill.getSkillName());
             System.out.println("Nyawa " + enemy.name + " berkurang sebanyak: " + (int)skillDamage);
             System.out.println("Nyawa " + enemy.name + " saat ini: " + (enemy.getHealth() < 0 ? 0 : enemy.getHealth()));
 
@@ -110,7 +146,7 @@ public class App {
                 if (enemySkillDamage < 0) enemySkillDamage = 0;
                 double heroHealth = hero.getHealth() - enemySkillDamage;
                 hero.setHealth((int)heroHealth);
-                System.out.println(enemy.name + " menggunakan skill " + enemySkill.getSkillName());
+                System.out.println(enemy.name + " menggunakan jurus " + enemySkill.getSkillName());
                 System.out.println("Nyawa Anda berkurang sebanyak: " + (int)enemySkillDamage);
                 System.out.println("Nyawa Anda saat ini: " + (hero.getHealth() < 0 ? 0 : hero.getHealth()));
             }

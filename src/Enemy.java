@@ -2,23 +2,16 @@ import java.util.ArrayList;
 
 public class Enemy extends Character {
     ArrayList<Skill> listSkill;
-    int level;
 
-    Enemy(String name, int damage, int armor, int level){
+    Enemy(String name, int damage, int armor){
         super.name = name;
         super.armor = armor;
         super.damage = damage;
         super.health = 100;
-        this.level = level;
         listSkill = new ArrayList<Skill>();
-        Skill skill1 = new Skill("Punch", 5 * level);
-        Skill skill2 = new Skill("Kick", 10 * level);
-        listSkill.add(skill1);
-        listSkill.add(skill2);
     }
 
-    public void addSkill(String skillName, int skillDamage){
-        Skill skill = new Skill(skillName, skillDamage);
+    public void addSkill(Skill skill){
         listSkill.add(skill);
     }
 

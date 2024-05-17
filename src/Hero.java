@@ -9,14 +9,9 @@ public class Hero extends Character {
         super.damage = damage;
         super.health = 100;
         listSkill = new ArrayList<Skill>();
-        Skill skill1 = new Skill("Punch", 10);
-        Skill skill2 = new Skill("Kick", 15);
-        listSkill.add(skill1);
-        listSkill.add(skill2);
     }
 
-    public void addSkill(String skillName, int skillDamage){
-        Skill skill = new Skill(skillName, skillDamage);
+    public void addSkill(Skill skill){
         listSkill.add(skill);
     }
 
