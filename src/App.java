@@ -8,8 +8,8 @@ public class App {
         ArrayList<Enemy> listEnemies = initAllEnemies();
 
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Daftar Karakter : ");
+        System.out.println("Selamat Datang di Duel Legenda");
+        System.out.println("Daftar Petarung : ");
         for (int i = 0; i < listHero.size(); i++)
             System.out.println((i + 1) + ". " + listHero.get(i).name);
 
@@ -17,7 +17,7 @@ public class App {
         int indexHero = -1;
 
         while (selectHero) {
-            System.out.print("Pilih Karakter : ");
+            System.out.print("Pilih Petarung Anda : ");
             indexHero = scanner.nextInt();
 
             if (indexHero > listHero.size())
@@ -30,7 +30,7 @@ public class App {
 
         Hero selectedHero = listHero.get(indexHero - 1);
 
-        System.out.println("Karakter Anda : " + selectedHero.name);
+        System.out.println("Petarung Anda : " + selectedHero.name);
         System.out.println("Damage : " + selectedHero.damage);
         System.out.println("Armor : " + selectedHero.armor);
         System.out.println("Health : " + selectedHero.health);
@@ -48,6 +48,7 @@ public class App {
             if (!mulai.equals("y"))
                 break;
 
+            selectedHero.setHealth(100);
             boolean isWin = fight(selectedHero, listEnemies.get(i), scanner);
             if (isWin && i == listEnemies.size() - 1)
                 System.out.println("Selamat Anda Menang!!!");
@@ -127,15 +128,15 @@ public class App {
             System.out.println("Giliran Anda");
             for (int i = 0; i < hero.listSkill.size(); i++) 
                 System.out.println(i + 1 + ". " + hero.listSkill.get(i).getSkillName() + " +" + hero.listSkill.get(i).getSkillDamage());
-            System.out.print("Pilih Jurus: ");
+            System.out.print("Pilih Jurus : ");
             Skill selectedSkill = hero.listSkill.get(scanner.nextInt() - 1);
             double skillDamage = (hero.getHeroDamage(selectedSkill) - enemy.getEnemyArmor());
             if (skillDamage < 0) skillDamage = 0;
             double enemyHealth = enemy.getHealth() - skillDamage;
             enemy.setHealth((int)enemyHealth);
-            System.out.println("Anda menggunakan jurs " + selectedSkill.getSkillName());
-            System.out.println("Nyawa " + enemy.name + " berkurang sebanyak: " + (int)skillDamage);
-            System.out.println("Nyawa " + enemy.name + " saat ini: " + (enemy.getHealth() < 0 ? 0 : enemy.getHealth()));
+            System.out.println("Anda menggunakan jurus " + selectedSkill.getSkillName());
+            System.out.println("Nyawa " + enemy.name + " berkurang sebanyak : " + (int)skillDamage);
+            System.out.println("Nyawa " + enemy.name + " saat ini : " + (enemy.getHealth() < 0 ? 0 : enemy.getHealth()));
 
             if (enemy.getHealth() > 0) {
                 System.out.println("===========================");
@@ -147,8 +148,8 @@ public class App {
                 double heroHealth = hero.getHealth() - enemySkillDamage;
                 hero.setHealth((int)heroHealth);
                 System.out.println(enemy.name + " menggunakan jurus " + enemySkill.getSkillName());
-                System.out.println("Nyawa Anda berkurang sebanyak: " + (int)enemySkillDamage);
-                System.out.println("Nyawa Anda saat ini: " + (hero.getHealth() < 0 ? 0 : hero.getHealth()));
+                System.out.println("Nyawa Anda berkurang sebanyak : " + (int)enemySkillDamage);
+                System.out.println("Nyawa Anda saat ini : " + (hero.getHealth() < 0 ? 0 : hero.getHealth()));
             }
         }
 
