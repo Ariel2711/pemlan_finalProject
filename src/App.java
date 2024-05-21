@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         ArrayList<Hero> listHero = initAllHero();
         ArrayList<Enemy> listEnemies = initAllEnemies();
 
@@ -18,12 +19,17 @@ public class App {
 
         while (selectHero) {
             System.out.print("Pilih Petarung Anda : ");
-            indexHero = scanner.nextInt();
-
-            if (indexHero > listHero.size())
-                System.out.println("Pilihan tidak valid");
-            else
-                break;
+            try {
+                indexHero = scanner.nextInt();
+                if (indexHero > 0 && indexHero <= listHero.size()) {
+                    selectHero = false;
+                } else {
+                    System.out.println("Pilihan tidak valid. Coba lagi.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input harus berupa angka. Coba lagi.");
+                scanner.next(); // Clear the invalid input
+            }
         }
 
         System.out.println("================================");
@@ -44,12 +50,28 @@ public class App {
 
         for (int i = 0; i < listEnemies.size(); i++) {
             System.out.println("Musuh Anda : " + listEnemies.get(i).name);
-            System.out.print("Mulai Pertarungan (y/n) : ");
-            String mulai = scanner.next();
-
-            if (!mulai.equals("y"))
+            boolean isValidInput = false;
+        
+            while (!isValidInput) {
+                try {
+                    System.out.print("Mulai Pertarungan (y/n) : ");
+                    String mulai = scanner.next();
+                    if (mulai.equalsIgnoreCase("y") || mulai.equalsIgnoreCase("n")) {
+                        isValidInput = true;
+                        if (mulai.equalsIgnoreCase("n"))
+                            System.exit(0);
+                    } else {
+                        System.out.println("Masukan tidak valid. Harap masukkan 'y' untuk ya atau 'n' untuk tidak.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Masukan harus berupa huruf. Coba lagi.");
+                    scanner.next();
+                }
+            }
+        
+            if (!isValidInput)
                 break;
-
+        
             selectedHero.setHealth(100);
             selectedHero.level++;
             boolean isWin = fight(selectedHero, listEnemies.get(i), scanner);
@@ -63,6 +85,7 @@ public class App {
                 break;
             }
         }
+        
 
         scanner.close();
     }
@@ -139,7 +162,7 @@ public class App {
                 }
             }
         }
-    
+
         System.out.println("===========================");
         boolean isWin = hero.getHealth() > 0;
         if (isWin)
@@ -148,26 +171,44 @@ public class App {
             System.out.println("Anda Kalah");
         return isWin;
     }
-    
+
     private static void playerAttack(Hero hero, Enemy enemy, Scanner scanner) {
         System.out.println("===========================");
         System.out.println("Giliran Anda");
-        for (int i = 0; i < hero.listSkill.size(); i++) 
+        for (int i = 0; i < hero.listSkill.size(); i++)
             System.out.println(i + 1 + ". " + hero.listSkill.get(i).getSkillName() + " +" + hero.listSkill.get(i).getSkillDamage());
-        System.out.print("Pilih Jurus : ");
-        Skill selectedSkill = hero.listSkill.get(scanner.nextInt() - 1);
+        
+        boolean validInput = false;
+        Skill selectedSkill = null;
+        
+        while (!validInput) {
+            try {
+                System.out.print("Pilih Jurus : ");
+                int skillIndex = scanner.nextInt();
+                if (skillIndex > 0 && skillIndex <= hero.listSkill.size()) {
+                    selectedSkill = hero.listSkill.get(skillIndex - 1);
+                    validInput = true;
+                } else {
+                    System.out.println("Pilihan tidak valid. Coba lagi.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input harus berupa angka. Coba lagi.");
+                scanner.next(); // Clear the invalid input
+            }
+        }
+
         Random random = new Random();
         int criticalAttack = random.nextInt(100);
         int skillDamage = hero.getHeroDamage(selectedSkill);
         if (criticalAttack < (100 - hero.getCriticalAttack())) skillDamage -= enemy.getEnemyArmor();
-        if(skillDamage < 0) skillDamage = 0;
+        if (skillDamage < 0) skillDamage = 0;
         int defenderHealth = enemy.getHealth() - skillDamage;
         enemy.setHealth(defenderHealth);
         System.out.println("Anda menggunakan jurus " + selectedSkill.getSkillName());
         System.out.println("Nyawa " + enemy.name + " berkurang sebanyak : -" + skillDamage);
         System.out.println("Nyawa " + enemy.name + " saat ini : " + (enemy.getHealth() < 0 ? 0 : enemy.getHealth()));
     }
-    
+
     private static void enemyAttack(Enemy enemy, Hero hero) {
         System.out.println("===========================");
         Random random = new Random();
@@ -175,7 +216,7 @@ public class App {
         int criticalAttack = random.nextInt(100);
         int skillDamage = enemy.getEnemyDamage(enemySkill);
         if (criticalAttack < (100 - enemy.getCriticalAttack())) skillDamage -= hero.getHeroArmor();
-        if(skillDamage < 0) skillDamage = 0;
+        if (skillDamage < 0) skillDamage = 0;
         int defenderHealth = hero.getHealth() - skillDamage;
         hero.setHealth(defenderHealth);
         System.out.println(enemy.name + " menggunakan jurus " + enemySkill.getSkillName());
