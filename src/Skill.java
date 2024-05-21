@@ -1,8 +1,8 @@
 public class Skill {
     private String skillName;
-    private double skillDamage;
+    private int skillDamage;
 
-    Skill(String skillName, double skillDamage){
+    Skill(String skillName, int skillDamage){
         this.skillName = skillName;
         this.skillDamage = skillDamage;
     }
@@ -11,7 +11,7 @@ public class Skill {
         return skillName;
     }
 
-    public double getSkillDamage(){
+    public int getSkillDamage(){
         return skillDamage;
     }
 }
