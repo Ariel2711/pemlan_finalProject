@@ -20,11 +20,11 @@ public class Hero extends Character {
     }
 
     public int getHeroDamage(Skill skill){
-        return (int)((skill.getSkillDamage() + super.damage + level) * Math.random());
+        return (int)((skill.getSkillDamage() + super.damage + (level * 5)) * Math.random());
     }
 
     public int getHeroArmor(){
-        return (int)((super.armor + level) * Math.random());
+        return (int)((super.armor + (level * 5)) * Math.random());
     }
 
     public int getHealth(){
