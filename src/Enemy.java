@@ -6,7 +6,7 @@ public class Enemy extends Character {
     Enemy(String name, int damage, int armor, int speed, int criticalAttack){
         super.name = name;
         super.armor = armor;
-        super.damage = damage;
+        super.basicDamage = damage;
         super.speed = speed;
         super.criticalAttack = criticalAttack;
         super.health = 100;
@@ -17,12 +17,24 @@ public class Enemy extends Character {
         listSkill.add(skill);
     }
 
-    public int getEnemyDamage(Skill skill){
-        return (int)((skill.getSkillDamage() + super.damage) * Math.random());
+    public int getAttackDamage(Skill skill){
+        return (int)((skill.getSkillDamage() + super.basicDamage) * Math.random());
     }
 
-    public int getEnemyArmor(){
+    public String getName(){
+        return name;
+    }
+
+    public int getBasicDamage(){
+        return basicDamage;
+    }
+
+    public int getDefenseArmor(){
         return (int)(super.armor * Math.random());
+    }
+
+    public int getArmor(){
+        return armor;
     }
 
     public int getHealth(){
