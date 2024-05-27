@@ -79,5 +79,6 @@ public class Hero extends Character {
         System.out.println("Basic Damage +5");
         System.out.println("Armor +5");
         System.out.println("Speed +5");
+        System.out.println("===========================");
     }
 }

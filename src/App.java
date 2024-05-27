@@ -74,20 +74,19 @@ public class App {
                 break;
 
             selectedHero.setHealth(100);
-            selectedHero.addXP(100);
             
             boolean playerFirst = selectedHero.getSpeed() > enemy.getSpeed();
             
             boolean isWin = fight(selectedHero, enemy, scanner, playerFirst);
-            System.out.println("===========================");
-                if (isWin && i == listEnemies.size() - 1)
-                    System.out.println("Selamat Anda Telah Menyelesaikan Game Ini");
-                else if (isWin)
-                    continue;
-                else {
+            if (isWin && i == listEnemies.size() - 1)
+                System.out.println("Selamat Anda Telah Menyelesaikan Game Ini");
+            else if (isWin){
+                selectedHero.addXP(100);
+                continue;
+            } else {
                     System.out.println("Game Berakhir");
                     break;
-                }
+            }
         }
     
         scanner.close();
